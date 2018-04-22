@@ -24,6 +24,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        //Creates the database table with the user as the primary key because usernames will
+        //be unique therefore they qualify as primary keys
         String sqlCreateTable = "CREATE TABLE " + TABLE_USERS + " (" +
                 USER + " TEXT PRIMARY KEY, " + EMAIL + " TEXT," + PASSWORD + " TEXT)";
         sqLiteDatabase.execSQL(sqlCreateTable);
@@ -36,6 +38,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public boolean checkUnique(String user){
+        //This will check the database to see if the requested username is there.
+        //If the cursor counter is 0 then that means that the username is not used.
+        //If the cursor counter is greater then 0 then that means that somebody already
+        //has that username.
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_USERS +  " WHERE " + USER  + " = " + user;
         Cursor cur = db.rawQuery(query, new String[] { user });
@@ -52,6 +58,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
     }
 
     public boolean login(String user, String password){
+        //This will see if the inputted username and password input are paired together
+        //in the database. If the cursor is 0 then that username and password are not
+        //found together. If the cursor is greater than 0 then the username and password
+        //are a match.
         SQLiteDatabase db = this.getWritableDatabase();
         String sql = "SELECT * FROM "+TABLE_USERS+" WHERE user=? AND password=?";
         Cursor cur = db.rawQuery(sql, new String[] { user, password });
@@ -67,7 +77,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
     }
 
-    public void insert( User user) {
+    public void insert(User user) {
+        //This will take in a new user and insert them into the database.
         SQLiteDatabase db = this.getWritableDatabase( );
         String sqlInsert = "INSERT INTO " + TABLE_USERS + "(" + USER + "," + EMAIL + "'" + PASSWORD + ")";
         sqlInsert += " values("+null+",'"+ user.getName() +"','"+ user.getEmail() + "','" + user.getPassword() + "')";
@@ -75,14 +86,16 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close( );
     }
 
-    public void delete(int id){
+    public void delete(String username){
+        //This will take in a username and delete that user from the database.
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlDelete = "delete from" + TABLE_USERS + "where id_number = "+id+"";
+        String sqlDelete = "delete from" + TABLE_USERS + "where USERNAME = "+username+"";
         db.execSQL(sqlDelete);
         db.close();
     }
 
     public ArrayList<User> selectAll( ) {
+        //This will display all the users in the database.
         String sqlQuery = "select * from " + TABLE_USERS;
 
         SQLiteDatabase db = this.getWritableDatabase( );
