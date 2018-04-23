@@ -17,7 +17,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.signinactivity);
     }
 
-    public boolean addStudent(View view) {
+    public boolean addUser(View view) {
         //This will register the user into the database. It takes the text from the
         //EditText boxes, gets the string from them and adds that to the database.
         EditText usernameBox = (EditText) findViewById(R.id.RegisterUsername);
@@ -28,7 +28,7 @@ public class SignInActivity extends AppCompatActivity {
         String useremail = emailBox.getText().toString();
         String userpassword = passwordBox.getText().toString();
         try {
-            if(db.checkUnique(username)==true) {
+            if (db.checkUnique(username) == true) {
                 db.insert(new User(username, useremail, userpassword));
                 change(view);
                 Toast.makeText(this, "User Added", Toast.LENGTH_SHORT).show();
@@ -43,7 +43,7 @@ public class SignInActivity extends AppCompatActivity {
         return false;
     }
 
-    public boolean signIn(View view){
+    public boolean signIn(View view) {
         //This will take the username and password from the EditText boxes and user the database
         //login function to see if the user entered the correct information.
         EditText usernameBox = (EditText) findViewById(R.id.username);
@@ -51,14 +51,13 @@ public class SignInActivity extends AppCompatActivity {
 
         String username = usernameBox.getText().toString();
         String password = passwordBox.getText().toString();
-        try{
-            if(db.login(username, password)==true) {
+        try {
+            if (db.login(username, password) == true) {
                 change(view);
                 Toast.makeText(this, "User Signed In", Toast.LENGTH_SHORT).show();
                 return true;
             }
-        }
-        catch(Exception exception){
+        } catch (Exception exception) {
             Toast.makeText(this, "Error: " + exception.getMessage(), Toast.LENGTH_LONG).show();
         }
 

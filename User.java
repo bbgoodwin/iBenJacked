@@ -6,8 +6,7 @@ public class User {
     private String email;
     private String password;
 
-    public User ( String usernamePassed, String emailPassed, String passwordPassed)
-    {
+    public User(String usernamePassed, String emailPassed, String passwordPassed) {
         user = usernamePassed;
         email = emailPassed;
         password = passwordPassed;
@@ -21,7 +20,7 @@ public class User {
         return email;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
@@ -33,7 +32,7 @@ public class User {
         email = emailPassed;
     }
 
-    public void setPassword(String passwordPassed){
+    public void setPassword(String passwordPassed) {
         password = passwordPassed;
     }
 
