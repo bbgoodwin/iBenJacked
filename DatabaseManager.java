@@ -29,9 +29,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //Creates the database table with the user as the primary key because usernames will
         //be unique therefore they qualify as primary keys
         String sqlCreateUserTable = "CREATE TABLE " + TABLE_USERS + "(" +
-                USER + " TEXT PRIMARY KEY NOT NULL, " + EMAIL + " TEXT NOT NULL," + PASSWORD + " TEXT NOT NULL);";
+                USER + " TEXT PRIMARY KEY NOT NULL, " + EMAIL + " TEXT NOT NULL, " + PASSWORD + " TEXT NOT NULL);";
         sqLiteDatabase.execSQL(sqlCreateUserTable);
-        String sqlCreateWorkoutTable = "CREATE TABLE " + TABLE_WORKOUT + "( ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + USER
+        String sqlCreateWorkoutTable = "CREATE TABLE " + TABLE_WORKOUT + "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + USER
                 + "TEXT NOT NULL, WORKOUT STRING NOT NULL, SETS INTEGER NOT NULL, REPS INTEGER NOT NULL, FOREIGN KEY(" + USER + ") REFERENCES " + TABLE_USERS + "(" + USER + "));";
         sqLiteDatabase.execSQL(sqlCreateWorkoutTable);
     }
@@ -67,7 +67,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //If the cursor counter is greater then 0 then that means that somebody already
         //has that username.
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + USER + " = " + user + ";";
+        String query = "SELECT * FROM " + TABLE_USERS + " WHERE " + USER + " = ?;";
         Cursor cur = db.rawQuery(query, new String[]{user});
         if (cur.getCount() == 0) {
             cur.close();
@@ -86,7 +86,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //found together. If the cursor is greater than 0 then the username and password
         //are a match.
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "SELECT * FROM " + TABLE_USERS + " WHERE user=? AND password=?;";
+        String sql = "SELECT * FROM " + TABLE_USERS + " WHERE USERNAME = ? AND PASSWORD = ?;";
         Cursor cur = db.rawQuery(sql, new String[]{user, password});
         if (cur.getCount() == 0) {
             cur.close();
@@ -102,8 +102,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void insert(User user) {
         //This will take in a new user and insert them into the database.
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlInsert = "INSERT INTO " + TABLE_USERS + "(" + USER + "," + EMAIL + "," + PASSWORD + ")";
-        sqlInsert += " values(" + user.getName() + "','" + user.getEmail() + "','" + user.getPassword() + "');";
+        String sqlInsert = "INSERT INTO " + TABLE_USERS + " (" + USER + "," + EMAIL + "," + PASSWORD +  ") VALUES ('" + user.getName() + "' , '" + user.getEmail() + "' , '" + user.getPassword() + "');";
         db.execSQL(sqlInsert);
         db.close();
     }

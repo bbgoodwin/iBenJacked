@@ -13,7 +13,7 @@ public class ProfileActivity extends AppCompatActivity {
     private DatabaseManager db;
 
     @Override
-    protected void oncreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         db = new DatabaseManager(this);
         setContentView(R.layout.profileactivity);
