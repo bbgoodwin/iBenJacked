@@ -31,8 +31,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String sqlCreateUserTable = "CREATE TABLE " + TABLE_USERS + "(" +
                 USER + " TEXT PRIMARY KEY NOT NULL, " + EMAIL + " TEXT NOT NULL, " + PASSWORD + " TEXT NOT NULL);";
         sqLiteDatabase.execSQL(sqlCreateUserTable);
-        String sqlCreateWorkoutTable = "CREATE TABLE " + TABLE_WORKOUT + "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," + USER
-                + "TEXT NOT NULL, WORKOUT STRING NOT NULL, SETS INTEGER NOT NULL, REPS INTEGER NOT NULL, FOREIGN KEY(" + USER + ") REFERENCES " + TABLE_USERS + "(" + USER + "));";
+        String sqlCreateWorkoutTable = "CREATE TABLE " + TABLE_WORKOUT + "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + USER
+                + " TEXT NOT NULL, WORKOUT STRING NOT NULL, CATEGORY STRING NOT NULL, WEIGHT INTEGER, SETS INTEGER NOT NULL, REPS INTEGER NOT NULL, FOREIGN KEY (" + USER + ") REFERENCES " + TABLE_USERS + "(" + USER + "));";
         sqLiteDatabase.execSQL(sqlCreateWorkoutTable);
     }
 
@@ -42,12 +42,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
         onCreate(sqLiteDatabase);
     }
 
-    public void addWorkout(String username, Workout workout) {
+    public void addWorkout(Workout workout) {
         //This will insert the username and the workout into the table workout.
         //Also, the workouts will be given an auto incrementing id.
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlInsert = "INSERT INTO " + TABLE_WORKOUT + "( ID, " + USER + ", WORKOUT, SETS, REPS)";
-        sqlInsert += " values( null,'" + username + "','" + workout.getWorkout() + "'," + workout.getSets() + "," + workout.getReps() + ");";
+        String sqlInsert = "INSERT INTO " + TABLE_WORKOUT + "( ID, " + USER + ", WORKOUT, CATEGORY, WEIGHT, SETS, REPS)";
+        sqlInsert += " values( null,'" + SignIn.signedInUser + "','" + workout.getWorkout() + "','" + workout.getCategory() + "'," + workout.getWeight() + "," + workout.getSets() + "," + workout.getReps() + ");";
         db.execSQL(sqlInsert);
         db.close();
     }
@@ -102,7 +102,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public void insert(User user) {
         //This will take in a new user and insert them into the database.
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlInsert = "INSERT INTO " + TABLE_USERS + " (" + USER + "," + EMAIL + "," + PASSWORD +  ") VALUES ('" + user.getName() + "' , '" + user.getEmail() + "' , '" + user.getPassword() + "');";
+        String sqlInsert = "INSERT INTO " + TABLE_USERS + " (" + USER + "," + EMAIL + "," + PASSWORD + ") VALUES ('" + user.getName() + "' , '" + user.getEmail() + "' , '" + user.getPassword() + "');";
         db.execSQL(sqlInsert);
         db.close();
     }
@@ -115,6 +115,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
+    public ArrayList<Workout> selectWorkouts() {
+        //This will display all the users in the database.
+        String sqlQuery = "select * from " + TABLE_WORKOUT;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sqlQuery, null);
+
+        ArrayList<Workout> workoutList = new ArrayList<Workout>();
+        while (cursor.moveToNext()) {
+            Workout currentWorkout
+                    = new Workout(cursor.getInt(0),
+                    cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
+            workoutList.add(currentWorkout);
+        }
+        db.close();
+        return workoutList;
+    }
+
     public ArrayList<User> selectAll() {
         //This will display all the users in the database.
         String sqlQuery = "select * from " + TABLE_USERS;
@@ -124,10 +142,10 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         ArrayList<User> userList = new ArrayList<User>();
         while (cursor.moveToNext()) {
-            User currentStudent
+            User currentUser
                     = new User(cursor.getString(0),
                     cursor.getString(1), cursor.getString(2));
-            userList.add(currentStudent);
+            userList.add(currentUser);
         }
         db.close();
         return userList;
