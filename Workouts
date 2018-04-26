@@ -1,0 +1,7 @@
+addWorkout(new Workout(1,User,Bicep Curls,Arms,30,3,15));
+addWorkout(new Workout(1,User,Tricep Presses,Arms,40,3,15));
+addWorkout(new Workout(1,User,Leg Presses,Legs,150,3,15));
+addWorkout(new Workout(1,User,Chest Press,Chest,120,3,15));
+addWorkout(new Workout(1,User,Bench Press,Chest,225,3,5));
+addWorkout(new Workout(1,User,Ab Crunches,Abs,null,3,15));
+addWorkout(new Workout(1,User,Sit Ups,Abs,null,3,15));
