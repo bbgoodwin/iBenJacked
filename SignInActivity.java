@@ -1,3 +1,4 @@
+/*
 package com.example.benjamin.databasemanager;
 
 import android.content.Intent;
@@ -75,3 +76,4 @@ public class SignInActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.animation, 0);
     }
 }
+*/

@@ -5,7 +5,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by bbgoodwin on 4/1/2018.
@@ -31,7 +35,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         String sqlCreateUserTable = "CREATE TABLE " + TABLE_USERS + "(" +
                 USER + " TEXT PRIMARY KEY NOT NULL, " + EMAIL + " TEXT NOT NULL, " + PASSWORD + " TEXT NOT NULL);";
         sqLiteDatabase.execSQL(sqlCreateUserTable);
-        String sqlCreateWorkoutTable = "CREATE TABLE " + TABLE_WORKOUT + "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + USER
+        String sqlCreateWorkoutTable = "CREATE TABLE " + TABLE_WORKOUT + "(ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, DATE TEXT NOT NULL, " + USER
                 + " TEXT NOT NULL, WORKOUT STRING NOT NULL, CATEGORY STRING NOT NULL, WEIGHT INTEGER, SETS INTEGER NOT NULL, REPS INTEGER NOT NULL, FOREIGN KEY (" + USER + ") REFERENCES " + TABLE_USERS + "(" + USER + "));";
         sqLiteDatabase.execSQL(sqlCreateWorkoutTable);
     }
@@ -46,8 +50,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         //This will insert the username and the workout into the table workout.
         //Also, the workouts will be given an auto incrementing id.
         SQLiteDatabase db = this.getWritableDatabase();
-        String sqlInsert = "INSERT INTO " + TABLE_WORKOUT + "( ID, " + USER + ", WORKOUT, CATEGORY, WEIGHT, SETS, REPS)";
-        sqlInsert += " values( null,'" + SignIn.signedInUser + "','" + workout.getWorkout() + "','" + workout.getCategory() + "'," + workout.getWeight() + "," + workout.getSets() + "," + workout.getReps() + ");";
+        Date date = Calendar.getInstance().getTime();
+        String sqlInsert = "INSERT INTO " + TABLE_WORKOUT + "( ID, DATE, " + USER + ", WORKOUT, CATEGORY, WEIGHT, SETS, REPS)";
+        sqlInsert += " values( null,'" + date + "','" + SignIn.signedInUser + "','" + workout.getWorkout() + "','" + workout.getCategory() + "'," + workout.getWeight() + "," + workout.getSets() + "," + workout.getReps() + ");";
         db.execSQL(sqlInsert);
         db.close();
     }
@@ -118,6 +123,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
     public ArrayList<Workout> selectWorkouts() {
         //This will display all the users in the database.
         String sqlQuery = "select * from " + TABLE_WORKOUT;
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(sqlQuery, null);
@@ -126,7 +132,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             Workout currentWorkout
                     = new Workout(cursor.getInt(0),
-                    cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getInt(4), cursor.getInt(5), cursor.getInt(6));
+                    cursor.getString(1), cursor.getString(2), cursor.getString(3), df.format(new Date(cursor.getString(4))), cursor.getInt(5), cursor.getInt(6), cursor.getInt(7));
             workoutList.add(currentWorkout);
         }
         db.close();

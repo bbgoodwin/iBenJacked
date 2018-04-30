@@ -51,12 +51,12 @@ public class Profile extends AppCompatActivity {
         }
     }
 
- /*   public void changeToWorkout(View v) {
-        Intent myIntent = new Intent(this, workoutActivity.class);
+    public void changeToWorkout(View v) {
+        Intent myIntent = new Intent(this, addWorkout.class);
         this.startActivity(myIntent);
         overridePendingTransition(R.anim.animation, 0);
     }
-
+/*
     public void changeToPicture(View v){
         Intent myIntent = new Intent(this, pictureActivity.class);
         this.startActivity(myIntent);

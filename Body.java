@@ -1,3 +1,4 @@
+/*
 package com.example.benjamin.databasemanager;
 
 import android.content.Intent;
@@ -49,3 +50,4 @@ public class Body extends AppCompatActivity {
         overridePendingTransition(R.anim.animation, 0);
     }
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package com.example.benjamin.databasemanager;
 
 import android.content.Intent;
@@ -52,3 +53,4 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
 }
+*/

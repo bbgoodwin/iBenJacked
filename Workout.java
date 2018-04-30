@@ -1,5 +1,7 @@
 package com.example.benjamin.databasemanager;
 
+import java.util.Date;
+
 public class Workout {
 
     private String workout;
@@ -9,8 +11,9 @@ public class Workout {
     private String category;
     private int id;
     private int weight;
+    private String date;
 
-    public Workout(int idPassed, String userPassed, String workoutPassed, String categoryPassed, int weightPassed, int setsPassed, int repsPassed) {
+    public Workout(int idPassed, String userPassed, String workoutPassed, String categoryPassed, String datePassed, int weightPassed, int setsPassed, int repsPassed) {
         id = idPassed;
         user = userPassed;
         workout = workoutPassed;
@@ -18,6 +21,7 @@ public class Workout {
         weight = weightPassed;
         sets = setsPassed;
         reps = repsPassed;
+        date = datePassed;
     }
 
     public String getWorkout() {
@@ -26,6 +30,10 @@ public class Workout {
 
     public String getUser() {
         return user;
+    }
+
+    public String getDate(){
+        return date;
     }
 
     public String getCategory() {
