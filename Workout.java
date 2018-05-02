@@ -13,7 +13,7 @@ public class Workout {
     private int weight;
     private String date;
 
-    public Workout(int idPassed, String userPassed, String workoutPassed, String categoryPassed, String datePassed, int weightPassed, int setsPassed, int repsPassed) {
+    public Workout(int idPassed, String datePassed, String userPassed, String workoutPassed, String categoryPassed, int weightPassed, int setsPassed, int repsPassed) {
         id = idPassed;
         user = userPassed;
         workout = workoutPassed;

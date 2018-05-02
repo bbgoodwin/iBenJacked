@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/workoutStuff"
+    tools:context=".addWorkout"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dip"
+        android:text="Choose a Workout" />
+
+    <Spinner
+        android:id="@+id/body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"
+        android:layout_marginTop="10dip"
+        android:entries="@array/body" />
+    <Spinner
+        android:id="@+id/workouts"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Weight: "
+        android:padding="8dip"/>
+    <EditText
+        android:id="@+id/weight"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dip"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Sets: "
+        android:padding="8dip"/>
+
+    <EditText
+        android:id="@+id/sets"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dip"/>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Reps: "
+        android:padding="8dip"/>
+    <EditText
+        android:id="@+id/reps"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dip"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="inputWorkout"
+        android:text="Submit" />
+
+</LinearLayout>
